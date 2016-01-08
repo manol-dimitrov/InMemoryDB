@@ -6,7 +6,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
- * Created by Manol on 12/09/2015.
+ * A service class providing CRUD type operations on the datastore.
+ * The underslying data structure is a concurrent hashmap in order to allow multiple clients to
+ * update and query the datastore.
  */
 public class Service {
 
@@ -17,10 +19,19 @@ public class Service {
         this.dataStore = dataStore;
     }
 
+    /**
+     * Creates a new history for a given identifier.
+     * @param identifier
+     * @param timestamp
+     * @param data
+     * @return
+     */
     public String createNewHistory(Integer identifier, Long timestamp, String data) {
         if (!dataStore.containsKey(identifier)) {
             listOfCurrentObservations = new ArrayList<>();
+
             listOfCurrentObservations.add(new Observation(data, timestamp));
+
             dataStore.put(identifier, listOfCurrentObservations);
             return "OK " + sanitiseData(data);
         } else {
@@ -80,6 +91,11 @@ public class Service {
         return "ERR There is no available observation for the specified identifier or timestamp";
     }
 
+    /**
+     * Gets the latest observation based on a give identifier.
+     * @param identifier
+     * @return
+     */
     public String getLatestObservation(Integer identifier) {
         List<Observation> historyForSpecifiedIdentifier = getHistoryForSpecifiedIdentifier(identifier);
         if (historyForSpecifiedIdentifier != null) {

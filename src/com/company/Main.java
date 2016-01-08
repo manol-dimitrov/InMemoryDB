@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Main {
 
-    static ConcurrentMap<Integer, List<Observation>> dataStore = new ConcurrentHashMap<Integer, List<Observation>>();
+    static ConcurrentMap<Integer, List<Observation>> dataStore = new ConcurrentHashMap<>();
     static Service service = new Service(dataStore);
     static Scanner scanner = new Scanner(System.in);
     static boolean exit = false;

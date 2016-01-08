@@ -1,7 +1,7 @@
 package com.company;
 
 /**
- * Created by Manol on 12/09/2015.
+ * Represents
  */
 public class Observation {
     private String data;
